@@ -24,10 +24,10 @@ function App() {
   useEffect(() => {
     const sections = document.querySelectorAll("section");
     const navLinks = document.querySelectorAll(".nav-link");
-    const headerHeight = 60; // Ajusta conforme a altura do cabeçalho
+    const headerHeight = 60; 
   
     const handleScroll = () => {
-      let current = null; // Use null em vez de string vazia para evitar ambiguidades
+      let current = null; 
   
       sections.forEach((section) => {
         const sectionTop = section.offsetTop - headerHeight;
@@ -49,7 +49,7 @@ function App() {
     };
   
     const handleClick = (e) => {
-      e.preventDefault(); // Previne o comportamento padrão
+      e.preventDefault();
       const targetId = e.currentTarget.getAttribute("href").substring(1);
       const targetElement = document.getElementById(targetId);
       if (targetElement) {
