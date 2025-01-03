@@ -24,11 +24,13 @@ function App() {
   useEffect(() => {
     const sections = document.querySelectorAll("section");
     const navLinks = document.querySelectorAll(".nav-link");
-
+    const headerHeight = 60; // Ajusta conforme a altura do cabeçalho
+  
     const handleScroll = () => {
-      let current = "";
+      let current = null; // Use null em vez de string vazia para evitar ambiguidades
+  
       sections.forEach((section) => {
-        const sectionTop = section.offsetTop - 60;
+        const sectionTop = section.offsetTop - headerHeight;
         const sectionHeight = section.offsetHeight;
         if (
           window.scrollY >= sectionTop &&
@@ -37,20 +39,44 @@ function App() {
           current = section.getAttribute("id");
         }
       });
-
+  
       navLinks.forEach((link) => {
         link.classList.remove("active");
-        if (link.getAttribute("href").includes(current)) {
+        if (current && link.getAttribute("href").includes(current)) {
           link.classList.add("active");
         }
       });
     };
-
+  
+    const handleClick = (e) => {
+      e.preventDefault(); // Previne o comportamento padrão
+      const targetId = e.currentTarget.getAttribute("href").substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        const offset = targetElement.offsetTop - headerHeight;
+        window.scrollTo({
+          top: offset,
+          behavior: "smooth",
+        });
+      }
+    };
+  
+    navLinks.forEach((link) => {
+      link.addEventListener("click", handleClick);
+    });
+  
     window.addEventListener("scroll", handleScroll);
+  
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      navLinks.forEach((link) => {
+        link.removeEventListener("click", handleClick);
+      });
     };
   }, []);
+  
+  
+  
 
   return (
     <div>
@@ -65,7 +91,10 @@ function App() {
             Faz Download, <span className="color_primary">Aprende</span>, e Faz
             <span className="color_primary">Apostas</span>!
           </h1>
-          <p className="fs-5">
+          <div>
+          <img src={selfone} alt="Selfone" className="img-1 img-fluid presentationsm" />
+        </div>
+          <p className="fs-5 mt-4 mb-4">
             A aplicação é uma sandbox para principiantes e apostadores curiosos.
             Aqui, aprende os conceitos das apostas sem gastar dinheiro real,
             ganhando experiência e confiança.
@@ -86,7 +115,7 @@ function App() {
           </a>
         </div>
         <div className=" col-12 col-md-6 p-3 ">
-          <img src={selfone} alt="Selfone" className="img-1 img-fluid" />
+          <img src={selfone} alt="Selfone" className="img-1 img-fluid presentationlg" />
         </div>
       </section>
 
@@ -184,7 +213,7 @@ function App() {
   </div>
   <div className="col-lg-6">
     <ul className="list-unstyled">
-      <li className="mb-3">
+      <li className="mb-3 mt-3">
         <p className="number-2"><span className="color_primary">1.Vê os desafios </span>  da plataforma</p>
       </li>
       <li className="mb-3">

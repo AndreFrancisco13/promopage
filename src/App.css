@@ -175,6 +175,7 @@ li .col-lg-12 {
   font-weight: bolder;
   color: var(--color-primary-1);
   padding: 1rem;
+  text-align: center;
 }
 
 .footer{
@@ -183,6 +184,15 @@ li .col-lg-12 {
   padding: 2rem;
   margin-top: 2rem;
   border-radius: 8px 8px 0 0;
+}
+
+.presentationsm{
+  display: inline;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.presentationlg{
+  display: none;
 }
 
 
@@ -223,6 +233,7 @@ li .col-lg-12 {
     font-weight: bolder;
     color: var(--color-primary-1);
     padding: 1rem;
+    text-align: left;
   }
 
   .img-download{
@@ -249,4 +260,15 @@ li .col-lg-12 {
 
 
 
+@media (min-width: 768px) {
 
+  .presentationsm{
+    display: none;
+
+  }
+  .presentationlg{
+    display: inline;
+  }
+
+  
+}
