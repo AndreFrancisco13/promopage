@@ -103,7 +103,7 @@ h1{
   font-weight: bolder;
 
 }
-h2{
+h2.normal{
   font-family: var(--font-headingpage) !important;
   font-size: 40px;
   font-weight: bolder;
@@ -208,7 +208,7 @@ li .col-lg-12 {
     font-weight: bolder;
   
   }
-  h2{
+  h2.normal{
     font-family: var(--font-headingpage) !important;
     font-size: 50px;
     font-weight: bolder;
@@ -271,4 +271,61 @@ li .col-lg-12 {
   }
 
   
+}
+
+
+.footer-links {
+  margin: 0 auto;
+}
+
+.footer-link {
+  transition: color 0.3s ease;
+  color: #000000;
+  font-weight: 500;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+}
+
+.footer-link-text {
+  position: relative;
+}
+
+.footer-link-text:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -3px;
+  left: 0;
+  background-color: #ffffff;
+  transition: width 0.3s ease;
+}
+
+.footer-link:hover .footer-link-text:after {
+  width: 100%;
+}
+
+.footer-divider {
+  color: #6c757d;
+  margin: 0 5px;
+}
+
+h2.policy-heading{
+  font-size: 20px !important;
+  font-weight: bold !important;
+  color: var(--color-primary-2) !important;
+  margin-bottom: 1rem;  
+  text-shadow: none;  
+}
+
+
+a{
+  text-decoration: none;
+  color: var(--color-primary-1-600);
+}
+
+a:hover{
+  color: var(--color-primary-2);
 }
