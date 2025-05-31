@@ -74,7 +74,7 @@ const DeclaracaoAcessibilidade = () => {
 
         body {
           background-color: var(--color-backgroundpage);
-          font-family: var(--font-current);
+          font-family: 'Poppins', sans-serif;
         }
 
         .color_primary{
