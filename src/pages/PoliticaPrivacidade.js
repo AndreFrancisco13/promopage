@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ChevronDown,
   ChevronUp,
@@ -14,8 +14,18 @@ import {
   AlertTriangle,
 } from "lucide-react";
 
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 const PoliticaPrivacidade = () => {
   const [expandedSections, setExpandedSections] = useState({});
+
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
+
+  const navigate = useNavigate();
 
   const toggleSection = (section) => {
     setExpandedSections((prev) => ({
@@ -243,11 +253,66 @@ const PoliticaPrivacidade = () => {
           color: var(--color-primary-2-200);
           text-decoration: underline;
         }
+          
 
         .text-small {
           font-size: 0.875rem;
         }
 
+        .btn-back-home {
+  position: fixed;
+  top: 20px;
+  left: 50px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-whyte);
+  border: 2px solid var(--color-primary-2);
+  color: var(--color-primary-2);
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 186, 96, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-back-home:hover {
+  background: var(--color-primary-2);
+  color: var(--color-whyte);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 186, 96, 0.25);
+}
+
+.btn-back-home:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 186, 96, 0.2);
+}
+
+.btn-back-home span {
+  white-space: nowrap;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .btn-back-home {
+    top: 15px;
+    left: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .btn-back-home span {
+    display: none;
+  }
+}
+
+        
         .company-info {
           background-color: var(--color-backgroundpage);
           border-radius: 8px;
@@ -266,10 +331,20 @@ const PoliticaPrivacidade = () => {
         className="min-vh-100"
         style={{ backgroundColor: "var(--color-backgroundpage)" }}
       >
-        <div className="container py-5">
+        <button
+          onClick={() => navigate("/")}
+          className="btn-back-home"
+          aria-label="Voltar à página inicial"
+        >
+          <ArrowLeft size={20} />
+          <span>Voltar</span>
+        </button>
+
+        <div className="container py-5 mt-5">
           <div className="row justify-content-center">
             <div className="col-12 col-lg-10">
               {/* Header */}
+
               <div className="card mb-4 shadow-sm">
                 <div className="card-body p-4">
                   <h1 className="mb-4">Política de Privacidade</h1>

@@ -1,32 +1,44 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Mail, MapPin, Phone } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { ChevronDown, ChevronUp, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const TermosCondicoes = () => {
   const [expandedSections, setExpandedSections] = useState({});
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
+
+  const navigate = useNavigate();
+
   const toggleSection = (section) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [section]: !prev[section]
+      [section]: !prev[section],
     }));
   };
 
   const Section = ({ id, title, children, isImportant = false }) => {
     const isExpanded = expandedSections[id];
-    
+
     return (
-      <div className={`card mb-4 ${isImportant ? 'border-danger' : ''}`}>
-        <div className={`card-header ${isImportant ? 'bg-danger bg-opacity-10' : 'bg-light'}`}>
+      <div className={`card mb-4 ${isImportant ? "border-danger" : ""}`}>
+        <div
+          className={`card-header ${isImportant ? "bg-danger bg-opacity-10" : "bg-light"}`}
+        >
           <button
             onClick={() => toggleSection(id)}
             className={`btn w-100 text-start d-flex justify-content-between align-items-center p-0 ${
-              isImportant ? 'btn-outline-danger' : 'btn-light'
+              isImportant ? "btn-outline-danger" : "btn-light"
             }`}
-            style={{ border: 'none', boxShadow: 'none' }}
+            style={{ border: "none", boxShadow: "none" }}
             aria-expanded={isExpanded}
             aria-controls={`section-${id}`}
           >
-            <h2 className={`policy-heading mb-0 ${isImportant ? 'text-danger' : ''}`}>
+            <h2
+              className={`policy-heading mb-0 ${isImportant ? "text-danger" : ""}`}
+            >
               {title}
             </h2>
             {isExpanded ? (
@@ -38,9 +50,7 @@ const TermosCondicoes = () => {
         </div>
         {isExpanded && (
           <div id={`section-${id}`} className="card-body">
-            <div className={isImportant ? 'text-danger' : ''}>
-              {children}
-            </div>
+            <div className={isImportant ? "text-danger" : ""}>{children}</div>
           </div>
         )}
       </div>
@@ -206,6 +216,60 @@ const TermosCondicoes = () => {
           font-size: 0.875rem;
         }
 
+        .btn-back-home {
+  position: fixed;
+  top: 20px;
+  left: 50px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-whyte);
+  border: 2px solid var(--color-primary-2);
+  color: var(--color-primary-2);
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 186, 96, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-back-home:hover {
+  background: var(--color-primary-2);
+  color: var(--color-whyte);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 186, 96, 0.25);
+}
+
+.btn-back-home:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 186, 96, 0.2);
+}
+
+.btn-back-home span {
+  white-space: nowrap;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .btn-back-home {
+    top: 15px;
+    left: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .btn-back-home span {
+    display: none;
+  }
+}
+
+
         .company-info {
           background-color: var(--color-backgroundpage);
           border-radius: 8px;
@@ -219,17 +283,28 @@ const TermosCondicoes = () => {
           }
         }
       `}</style>
-      
-      <div className="min-vh-100" style={{ backgroundColor: 'var(--color-backgroundpage)' }}>
-        <div className="container py-5">
+
+      <div
+        className="min-vh-100"
+        style={{ backgroundColor: "var(--color-backgroundpage)" }}
+      >
+        <button
+          onClick={() => navigate("/")}
+          className="btn-back-home"
+          aria-label="Voltar à página inicial"
+        >
+          <ArrowLeft size={20} />
+          <span>Voltar</span>
+        </button>
+
+        <div className="container py-5 mt-5">
           <div className="row justify-content-center">
             <div className="col-12 col-lg-10">
-              
               {/* Header */}
               <div className="card mb-4 shadow-sm">
                 <div className="card-body p-4">
                   <h1 className="mb-4">Termos e Condições</h1>
-                  
+
                   <div className="row g-3 mb-4">
                     <div className="col-auto">
                       <span className="badge-custom">
@@ -242,10 +317,12 @@ const TermosCondicoes = () => {
                       </span>
                     </div>
                   </div>
-                  
+
                   {/* Company Info */}
                   <div className="company-info mb-4">
-                    <h2 className="policy-heading">BetLearn - Informações da Empresa</h2>
+                    <h2 className="policy-heading">
+                      BetLearn - Informações da Empresa
+                    </h2>
                     <div className="row g-4">
                       <div className="col-md-6">
                         <div className="d-flex align-items-start">
@@ -253,8 +330,10 @@ const TermosCondicoes = () => {
                           <div>
                             <p className="fw-bold mb-1">Endereço:</p>
                             <p className="text-muted mb-0 text-small">
-                              Campus Universitário de Santiago<br />
-                              Universidade de Aveiro<br />
+                              Campus Universitário de Santiago
+                              <br />
+                              Universidade de Aveiro
+                              <br />
                               Aveiro, Aveiro 3810-193, Portugal
                             </p>
                           </div>
@@ -265,7 +344,10 @@ const TermosCondicoes = () => {
                           <Mail className="text-muted me-2 mt-1" size={16} />
                           <div>
                             <p className="fw-bold mb-1">E-mail:</p>
-                            <a href="mailto:betlearn2@gmail.com" className="text-small">
+                            <a
+                              href="mailto:betlearn2@gmail.com"
+                              className="text-small"
+                            >
                               betlearn2@gmail.com
                             </a>
                           </div>
@@ -274,10 +356,18 @@ const TermosCondicoes = () => {
                     </div>
                   </div>
 
-                  <div className="alert alert-custom-info " style={{ borderColor: 'var(--color-primary-2)' }}>
-                    <h3 className="fw-bold color_primary mb-2">Sobre a BetLearn</h3>
+                  <div
+                    className="alert alert-custom-info "
+                    style={{ borderColor: "var(--color-primary-2)" }}
+                  >
+                    <h3 className="fw-bold color_primary mb-2">
+                      Sobre a BetLearn
+                    </h3>
                     <p className="mb-0 text-small">
-                      Aplicação sandbox dirigida para apostadores iniciantes, onde os utilizadores podem cumprir desafios relacionados com apostas, desbloquear cenários mais complexos e subir no ranking.
+                      Aplicação sandbox dirigida para apostadores iniciantes,
+                      onde os utilizadores podem cumprir desafios relacionados
+                      com apostas, desbloquear cenários mais complexos e subir
+                      no ranking.
                     </p>
                   </div>
                 </div>
@@ -285,12 +375,18 @@ const TermosCondicoes = () => {
 
               {/* Important Notice */}
               <div className="alert alert-custom-danger border-start border-4 border-danger mb-4">
-                <h2 className="fw-bold text-danger mb-3">⚠️ Aviso Importante</h2>
+                <h2 className="fw-bold text-danger mb-3">
+                  ⚠️ Aviso Importante
+                </h2>
                 <p className="fw-bold mb-2">
-                  SE NÃO CONCORDAR COM TODOS ESSES TERMOS LEGAIS, ENTÃO ESTÁ EXPRESSAMENTE PROIBIDO DE USAR OS SERVIÇOS E DEVE INTERROMPER O USO IMEDIATAMENTE.
+                  SE NÃO CONCORDAR COM TODOS ESSES TERMOS LEGAIS, ENTÃO ESTÁ
+                  EXPRESSAMENTE PROIBIDO DE USAR OS SERVIÇOS E DEVE INTERROMPER
+                  O USO IMEDIATAMENTE.
                 </p>
                 <p className="text-small mb-0">
-                  Os Serviços destinam-se a utilizadores com pelo menos 18 anos de idade. Pessoas com idade inferior a 18 anos não estão autorizadas a utilizar ou registar-se nos Serviços.
+                  Os Serviços destinam-se a utilizadores com pelo menos 18 anos
+                  de idade. Pessoas com idade inferior a 18 anos não estão
+                  autorizadas a utilizar ou registar-se nos Serviços.
                 </p>
               </div>
 
@@ -300,33 +396,35 @@ const TermosCondicoes = () => {
                   <h2 className="policy-heading">Índice de Conteúdos</h2>
                   <div className="row g-2">
                     {[
-                      'OS NOSSOS SERVIÇOS',
-                      'DIREITOS DE PROPRIEDADE INTELECTUAL',
-                      'REPRESENTAÇÕES DO UTILIZADOR',
-                      'REGISTO DO UTILIZADOR',
-                      'ACTIVIDADES PROIBIDAS',
-                      'CONTRIBUIÇÕES GERADAS PELOS UTILIZADORES',
-                      'LICENÇA DE CONTRIBUIÇÃO',
-                      'LICENÇA DE APLICAÇÃO MÓVEL',
-                      'GESTÃO DE SERVIÇOS',
-                      'INFRACÇÕES AOS DIREITOS DE AUTOR',
-                      'DURAÇÃO E RESCISÃO',
-                      'ALTERAÇÕES E INTERRUPÇÕES',
-                      'LEGISLAÇÃO APLICÁVEL',
-                      'RESOLUÇÃO DE LITÍGIOS',
-                      'CORREÇÕES',
-                      'ISENÇÃO DE RESPONSABILIDADE',
-                      'LIMITAÇÕES DE RESPONSABILIDADE',
-                      'INDEMNIZAÇÃO',
-                      'DADOS DO UTILIZADOR',
-                      'COMUNICAÇÕES ELECTRÓNICAS',
-                      'UTILIZADORES DA CALIFÓRNIA',
-                      'DIVERSOS',
-                      'CONTACTE-NOS'
+                      "OS NOSSOS SERVIÇOS",
+                      "DIREITOS DE PROPRIEDADE INTELECTUAL",
+                      "REPRESENTAÇÕES DO UTILIZADOR",
+                      "REGISTO DO UTILIZADOR",
+                      "ACTIVIDADES PROIBIDAS",
+                      "CONTRIBUIÇÕES GERADAS PELOS UTILIZADORES",
+                      "LICENÇA DE CONTRIBUIÇÃO",
+                      "LICENÇA DE APLICAÇÃO MÓVEL",
+                      "GESTÃO DE SERVIÇOS",
+                      "INFRACÇÕES AOS DIREITOS DE AUTOR",
+                      "DURAÇÃO E RESCISÃO",
+                      "ALTERAÇÕES E INTERRUPÇÕES",
+                      "LEGISLAÇÃO APLICÁVEL",
+                      "RESOLUÇÃO DE LITÍGIOS",
+                      "CORREÇÕES",
+                      "ISENÇÃO DE RESPONSABILIDADE",
+                      "LIMITAÇÕES DE RESPONSABILIDADE",
+                      "INDEMNIZAÇÃO",
+                      "DADOS DO UTILIZADOR",
+                      "COMUNICAÇÕES ELECTRÓNICAS",
+                      "UTILIZADORES DA CALIFÓRNIA",
+                      "DIVERSOS",
+                      "CONTACTE-NOS",
                     ].map((item, index) => (
                       <div key={index} className="col-md-6">
                         <div className="p-2 rounded hover-bg-light">
-                          <span className="text-muted text-small me-2">{index + 1}.</span>
+                          <span className="text-muted text-small me-2">
+                            {index + 1}.
+                          </span>
                           <span className="text-small">{item}</span>
                         </div>
                       </div>
@@ -338,52 +436,93 @@ const TermosCondicoes = () => {
               {/* Sections */}
               <Section id="servicos" title="1. OS NOSSOS SERVIÇOS">
                 <p className="mb-4">
-                  As informações fornecidas ao utilizar os Serviços não se destinam a ser distribuídas ou utilizadas por qualquer pessoa ou entidade em qualquer jurisdição ou país onde essa distribuição ou utilização seja contrária à lei ou regulamento.
+                  As informações fornecidas ao utilizar os Serviços não se
+                  destinam a ser distribuídas ou utilizadas por qualquer pessoa
+                  ou entidade em qualquer jurisdição ou país onde essa
+                  distribuição ou utilização seja contrária à lei ou
+                  regulamento.
                 </p>
                 <div className="alert alert-custom-warning">
                   <h4 className="fw-bold mb-2">⚠️ Conformidade Regulamentar</h4>
                   <p className="text-small mb-0">
-                    Os Serviços não estão adaptados para cumprir regulamentos específicos do sector (HIPAA, FISMA, etc.). Se as suas interações estiverem sujeitas a essas leis, não poderá utilizar os Serviços.
+                    Os Serviços não estão adaptados para cumprir regulamentos
+                    específicos do sector (HIPAA, FISMA, etc.). Se as suas
+                    interações estiverem sujeitas a essas leis, não poderá
+                    utilizar os Serviços.
                   </p>
                 </div>
               </Section>
 
-              <Section id="propriedade" title="2. DIREITOS DE PROPRIEDADE INTELECTUAL">
+              <Section
+                id="propriedade"
+                title="2. DIREITOS DE PROPRIEDADE INTELECTUAL"
+              >
                 <div className="mb-4">
-                  <h4 className="fw-bold mb-2">A nossa propriedade intelectual</h4>
+                  <h4 className="fw-bold mb-2">
+                    A nossa propriedade intelectual
+                  </h4>
                   <p className="mb-3">
-                    Somos proprietários ou licenciados de todos os direitos de propriedade intelectual dos nossos Serviços, incluindo todo o código-fonte, bases de dados, funcionalidades, software, designs, áudio, vídeo, texto, fotografias e gráficos.
+                    Somos proprietários ou licenciados de todos os direitos de
+                    propriedade intelectual dos nossos Serviços, incluindo todo
+                    o código-fonte, bases de dados, funcionalidades, software,
+                    designs, áudio, vídeo, texto, fotografias e gráficos.
                   </p>
                 </div>
-                
+
                 <div className="alert alert-custom-info mb-4">
-                  <h4 className="fw-bold color_primary mb-2">Licença de Utilização</h4>
-                  <p className="text-small mb-2">Concedemos-lhe uma licença não exclusiva, intransmissível e revogável para:</p>
+                  <h4 className="fw-bold color_primary mb-2">
+                    Licença de Utilização
+                  </h4>
+                  <p className="text-small mb-2">
+                    Concedemos-lhe uma licença não exclusiva, intransmissível e
+                    revogável para:
+                  </p>
                   <ul className="text-small mb-0">
                     <li>Aceder aos Serviços</li>
-                    <li>Descarregar ou imprimir cópias para utilização pessoal, não comercial</li>
+                    <li>
+                      Descarregar ou imprimir cópias para utilização pessoal,
+                      não comercial
+                    </li>
                   </ul>
                 </div>
 
                 <div className="company-info">
-                  <h4 className="fw-bold mb-2">Os seus envios e contribuições</h4>
+                  <h4 className="fw-bold mb-2">
+                    Os seus envios e contribuições
+                  </h4>
                   <p className="text-small mb-2">
-                    <strong>Envios:</strong> Ao enviar-nos qualquer conteúdo, concorda em ceder-nos todos os direitos de propriedade intelectual.
+                    <strong>Envios:</strong> Ao enviar-nos qualquer conteúdo,
+                    concorda em ceder-nos todos os direitos de propriedade
+                    intelectual.
                   </p>
                   <p className="text-small mb-0">
-                    <strong>Contribuições:</strong> Conteúdos que cria através dos Serviços podem ser visualizados por outros utilizadores.
+                    <strong>Contribuições:</strong> Conteúdos que cria através
+                    dos Serviços podem ser visualizados por outros utilizadores.
                   </p>
                 </div>
               </Section>
 
-              <Section id="representacoes" title="3. REPRESENTAÇÕES DO UTILIZADOR">
-                <p className="mb-4">Ao utilizar os Serviços, o utilizador declara e garante que:</p>
+              <Section
+                id="representacoes"
+                title="3. REPRESENTAÇÕES DO UTILIZADOR"
+              >
+                <p className="mb-4">
+                  Ao utilizar os Serviços, o utilizador declara e garante que:
+                </p>
                 <ul className="text-small">
-                  <li>Todas as informações de registo serão verdadeiras, exactas e completas</li>
+                  <li>
+                    Todas as informações de registo serão verdadeiras, exactas e
+                    completas
+                  </li>
                   <li>Manterá a exactidão dessas informações atualizadas</li>
-                  <li>Tem capacidade jurídica e concorda em cumprir estes Termos Legais</li>
+                  <li>
+                    Tem capacidade jurídica e concorda em cumprir estes Termos
+                    Legais
+                  </li>
                   <li>Não é menor de idade na jurisdição em que reside</li>
-                  <li>Não acederá aos Serviços através de meios automatizados</li>
+                  <li>
+                    Não acederá aos Serviços através de meios automatizados
+                  </li>
                   <li>Não utilizará os Serviços para qualquer fim ilegal</li>
                   <li>A utilização não violará qualquer lei aplicável</li>
                 </ul>
@@ -391,39 +530,48 @@ const TermosCondicoes = () => {
 
               <Section id="registo" title="4. REGISTO DO UTILIZADOR">
                 <p className="mb-4">
-                  Poderá ser-lhe pedido que se registe para utilizar os Serviços. O utilizador concorda em manter a sua palavra-passe confidencial e será responsável por toda a utilização da sua conta.
+                  Poderá ser-lhe pedido que se registe para utilizar os
+                  Serviços. O utilizador concorda em manter a sua palavra-passe
+                  confidencial e será responsável por toda a utilização da sua
+                  conta.
                 </p>
                 <div className="alert alert-custom-warning">
                   <p className="text-small mb-0">
-                    <strong>Nota:</strong> Reservamo-nos o direito de remover, reclamar ou alterar um nome de utilizador se determinarmos que é inadequado, obsceno ou censurável.
+                    <strong>Nota:</strong> Reservamo-nos o direito de remover,
+                    reclamar ou alterar um nome de utilizador se determinarmos
+                    que é inadequado, obsceno ou censurável.
                   </p>
                 </div>
               </Section>
 
-              <Section id="atividades-proibidas" title="5. ACTIVIDADES PROIBIDAS" isImportant={true}>
+              <Section
+                id="atividades-proibidas"
+                title="5. ACTIVIDADES PROIBIDAS"
+                isImportant={true}
+              >
                 <p className="mb-4 fw-bold">
                   Como utilizador dos Serviços, o utilizador concorda em NÃO:
                 </p>
                 <div>
                   {[
-                    'Recuperar sistematicamente dados para criar coleções sem autorização',
-                    'Enganar, defraudar ou iludir para obter informações sensíveis',
-                    'Contornar funcionalidades de segurança dos Serviços',
-                    'Desprezar, manchar ou prejudicar a nós e/ou aos Serviços',
-                    'Utilizar informações para assediar, abusar ou prejudicar outras pessoas',
-                    'Utilizar indevidamente os serviços de apoio',
-                    'Utilizar os Serviços de forma inconsistente com leis aplicáveis',
-                    'Carregar vírus, malware ou material prejudicial',
-                    'Utilizar sistemas automatizados como bots ou scripts',
-                    'Eliminar avisos de direitos de autor',
-                    'Fazer-se passar por outro utilizador',
-                    'Interferir com o funcionamento dos Serviços',
-                    'Assediar funcionários ou agentes',
-                    'Copiar ou adaptar o software dos Serviços',
-                    'Fazer engenharia reversa do software',
-                    'Utilizar para fins comerciais não autorizados',
-                    'Vender ou transferir o seu perfil',
-                    'Utilizar para publicitar bens e serviços'
+                    "Recuperar sistematicamente dados para criar coleções sem autorização",
+                    "Enganar, defraudar ou iludir para obter informações sensíveis",
+                    "Contornar funcionalidades de segurança dos Serviços",
+                    "Desprezar, manchar ou prejudicar a nós e/ou aos Serviços",
+                    "Utilizar informações para assediar, abusar ou prejudicar outras pessoas",
+                    "Utilizar indevidamente os serviços de apoio",
+                    "Utilizar os Serviços de forma inconsistente com leis aplicáveis",
+                    "Carregar vírus, malware ou material prejudicial",
+                    "Utilizar sistemas automatizados como bots ou scripts",
+                    "Eliminar avisos de direitos de autor",
+                    "Fazer-se passar por outro utilizador",
+                    "Interferir com o funcionamento dos Serviços",
+                    "Assediar funcionários ou agentes",
+                    "Copiar ou adaptar o software dos Serviços",
+                    "Fazer engenharia reversa do software",
+                    "Utilizar para fins comerciais não autorizados",
+                    "Vender ou transferir o seu perfil",
+                    "Utilizar para publicitar bens e serviços",
                   ].map((item, index) => (
                     <div key={index} className="prohibited-item">
                       <span className="icon">✗</span>
@@ -433,31 +581,52 @@ const TermosCondicoes = () => {
                 </div>
               </Section>
 
-              <Section id="contribuicoes" title="6. CONTRIBUIÇÕES GERADAS PELO UTILIZADOR">
+              <Section
+                id="contribuicoes"
+                title="6. CONTRIBUIÇÕES GERADAS PELO UTILIZADOR"
+              >
                 <p className="mb-4">
-                  Os Serviços podem permitir-lhe criar, submeter e partilhar conteúdos. Quando o faz, declara e garante que:
+                  Os Serviços podem permitir-lhe criar, submeter e partilhar
+                  conteúdos. Quando o faz, declara e garante que:
                 </p>
                 <ul className="text-small">
-                  <li>As suas contribuições não infringem direitos de propriedade de terceiros</li>
-                  <li>É o criador e proprietário ou tem as licenças necessárias</li>
-                  <li>Tem consentimento de pessoas identificáveis nas suas contribuições</li>
-                  <li>As contribuições não são falsas, inexactas ou enganosas</li>
+                  <li>
+                    As suas contribuições não infringem direitos de propriedade
+                    de terceiros
+                  </li>
+                  <li>
+                    É o criador e proprietário ou tem as licenças necessárias
+                  </li>
+                  <li>
+                    Tem consentimento de pessoas identificáveis nas suas
+                    contribuições
+                  </li>
+                  <li>
+                    As contribuições não são falsas, inexactas ou enganosas
+                  </li>
                   <li>Não são publicidade não solicitada ou spam</li>
                   <li>Não são obscenas, violentas ou assediantes</li>
                   <li>Não violam leis aplicáveis</li>
                 </ul>
               </Section>
 
-              <Section id="licenca-mobile" title="8. LICENÇA DE APLICAÇÃO MÓVEL">
+              <Section
+                id="licenca-mobile"
+                title="8. LICENÇA DE APLICAÇÃO MÓVEL"
+              >
                 <p className="mb-4">
-                  Se aceder aos Serviços através da Aplicação, concedemos-lhe um direito revogável, não exclusivo e limitado de instalar e utilizar a Aplicação.
+                  Se aceder aos Serviços através da Aplicação, concedemos-lhe um
+                  direito revogável, não exclusivo e limitado de instalar e
+                  utilizar a Aplicação.
                 </p>
-                
+
                 <div className="company-info mb-4">
                   <h4 className="fw-bold mb-2">Restrições</h4>
                   <p className="text-small mb-2">O utilizador não poderá:</p>
                   <ul className="text-small mb-0">
-                    <li>Descompilar ou fazer engenharia reversa da Aplicação</li>
+                    <li>
+                      Descompilar ou fazer engenharia reversa da Aplicação
+                    </li>
                     <li>Efetuar modificações ou trabalhos derivados</li>
                     <li>Violar leis aplicáveis</li>
                     <li>Remover avisos de propriedade</li>
@@ -466,15 +635,21 @@ const TermosCondicoes = () => {
                 </div>
 
                 <div className="alert alert-custom-info">
-                  <h4 className="fw-bold color_primary mb-2">Dispositivos Apple e Android</h4>
+                  <h4 className="fw-bold color_primary mb-2">
+                    Dispositivos Apple e Android
+                  </h4>
                   <p className="text-small mb-0">
-                    Termos específicos aplicam-se quando utiliza a aplicação obtida na Apple Store ou Google Play, incluindo conformidade com as regras dos distribuidores.
+                    Termos específicos aplicam-se quando utiliza a aplicação
+                    obtida na Apple Store ou Google Play, incluindo conformidade
+                    com as regras dos distribuidores.
                   </p>
                 </div>
               </Section>
 
               <Section id="gestao" title="9. GESTÃO DOS SERVIÇOS">
-                <p className="mb-4">Reservamo-nos o direito, mas não a obrigação, de:</p>
+                <p className="mb-4">
+                  Reservamo-nos o direito, mas não a obrigação, de:
+                </p>
                 <ul className="text-small">
                   <li>Monitorizar os Serviços quanto a violações</li>
                   <li>Tomar medidas legais contra violadores</li>
@@ -484,62 +659,90 @@ const TermosCondicoes = () => {
                 </ul>
               </Section>
 
-              <Section id="duracao" title="11. DURAÇÃO E RESCISÃO" isImportant={true}>
+              <Section
+                id="duracao"
+                title="11. DURAÇÃO E RESCISÃO"
+                isImportant={true}
+              >
                 <p className="fw-bold mb-4">
-                  Os presentes Termos Legais permanecerão em vigor enquanto utilizar os Serviços.
+                  Os presentes Termos Legais permanecerão em vigor enquanto
+                  utilizar os Serviços.
                 </p>
-                
+
                 <div className="alert alert-custom-danger mb-4">
                   <p className="fw-bold mb-2">
-                    RESERVAMO-NOS O DIREITO DE NEGAR ACESSO E UTILIZAÇÃO DOS SERVIÇOS A QUALQUER PESSOA, POR QUALQUER MOTIVO, SEM AVISO PRÉVIO.
+                    RESERVAMO-NOS O DIREITO DE NEGAR ACESSO E UTILIZAÇÃO DOS
+                    SERVIÇOS A QUALQUER PESSOA, POR QUALQUER MOTIVO, SEM AVISO
+                    PRÉVIO.
                   </p>
                   <p className="text-small mb-0">
-                    Podemos terminar a sua conta e eliminar qualquer conteúdo a qualquer altura, segundo o nosso critério exclusivo.
+                    Podemos terminar a sua conta e eliminar qualquer conteúdo a
+                    qualquer altura, segundo o nosso critério exclusivo.
                   </p>
                 </div>
 
                 <p className="text-small">
-                  Se a sua conta for terminada, está proibido de criar uma nova conta, mesmo com nomes diferentes.
+                  Se a sua conta for terminada, está proibido de criar uma nova
+                  conta, mesmo com nomes diferentes.
                 </p>
               </Section>
 
               <Section id="legislacao" title="13. LEGISLAÇÃO APLICÁVEL">
                 <p className="mb-4">
-                  Os presentes Termos Legais são regidos pelas leis de <strong>Portugal</strong>.
+                  Os presentes Termos Legais são regidos pelas leis de{" "}
+                  <strong>Portugal</strong>.
                 </p>
-                
+
                 <div className="alert alert-custom-info mb-4">
                   <h4 className="fw-bold color_primary mb-2">Jurisdição</h4>
                   <p className="text-small mb-0">
-                    BetLearn e você concordam em submeter-se à jurisdição dos tribunais de <strong>Aveiro</strong>. 
-                    Se for residente da UE e consumidor, possui proteção adicional das leis do seu país de residência.
+                    BetLearn e você concordam em submeter-se à jurisdição dos
+                    tribunais de <strong>Aveiro</strong>. Se for residente da UE
+                    e consumidor, possui proteção adicional das leis do seu país
+                    de residência.
                   </p>
                 </div>
 
                 <div className="company-info">
                   <h4 className="fw-bold mb-2">Arbitragem</h4>
                   <p className="text-small mb-2">
-                    Litígios serão resolvidos por arbitragem de acordo com o Tribunal Europeu de Arbitragem, com sede em Estrasburgo.
+                    Litígios serão resolvidos por arbitragem de acordo com o
+                    Tribunal Europeu de Arbitragem, com sede em Estrasburgo.
                   </p>
                   <ul className="text-small mb-0">
-                    <li><strong>Sede:</strong> Aveiro, Portugal</li>
-                    <li><strong>Língua:</strong> Português</li>
-                    <li><strong>Lei aplicável:</strong> Lei de Portugal</li>
+                    <li>
+                      <strong>Sede:</strong> Aveiro, Portugal
+                    </li>
+                    <li>
+                      <strong>Língua:</strong> Português
+                    </li>
+                    <li>
+                      <strong>Lei aplicável:</strong> Lei de Portugal
+                    </li>
                   </ul>
                 </div>
               </Section>
 
-              <Section id="isencao" title="16. ISENÇÃO DE RESPONSABILIDADE" isImportant={true}>
+              <Section
+                id="isencao"
+                title="16. ISENÇÃO DE RESPONSABILIDADE"
+                isImportant={true}
+              >
                 <div className="alert alert-custom-warning mb-4">
                   <p className="fw-bold mb-2">
-                    OS SERVIÇOS SÃO FORNECIDOS NO ESTADO EM QUE SE ENCONTRAM E CONFORME DISPONÍVEIS.
+                    OS SERVIÇOS SÃO FORNECIDOS NO ESTADO EM QUE SE ENCONTRAM E
+                    CONFORME DISPONÍVEIS.
                   </p>
                   <p className="text-small mb-0">
-                    A sua utilização dos Serviços será feita por sua conta e risco.
+                    A sua utilização dos Serviços será feita por sua conta e
+                    risco.
                   </p>
                 </div>
-                
-                <p className="mb-4 fw-bold">Rejeitamos todas as garantias e não assumimos responsabilidade por:</p>
+
+                <p className="mb-4 fw-bold">
+                  Rejeitamos todas as garantias e não assumimos responsabilidade
+                  por:
+                </p>
                 <ul className="text-small">
                   <li>Erros ou inexactidões de conteúdos</li>
                   <li>Danos pessoais ou materiais resultantes do seu acesso</li>
@@ -550,13 +753,19 @@ const TermosCondicoes = () => {
                 </ul>
               </Section>
 
-              <Section id="limitacoes" title="17. LIMITAÇÕES DE RESPONSABILIDADE" isImportant={true}>
+              <Section
+                id="limitacoes"
+                title="17. LIMITAÇÕES DE RESPONSABILIDADE"
+                isImportant={true}
+              >
                 <div className="alert alert-custom-danger">
                   <p className="fw-bold mb-2">
-                    EM CASO ALGUM SEREMOS RESPONSÁVEIS POR DANOS DIRETOS, INDIRETOS, CONSEQUENCIAIS OU PUNITIVOS.
+                    EM CASO ALGUM SEREMOS RESPONSÁVEIS POR DANOS DIRETOS,
+                    INDIRETOS, CONSEQUENCIAIS OU PUNITIVOS.
                   </p>
                   <p className="text-small mb-2">
-                    A nossa responsabilidade será sempre limitada ao menor dos montantes:
+                    A nossa responsabilidade será sempre limitada ao menor dos
+                    montantes:
                   </p>
                   <ul className="text-small mb-0">
                     <li>Montantes pagos nos últimos 3 meses</li>
@@ -567,13 +776,18 @@ const TermosCondicoes = () => {
 
               <Section id="dados" title="19. DADOS DO UTILIZADOR">
                 <p className="mb-4">
-                  Manteremos determinados dados que transmite aos Serviços para gestão do desempenho e dados de utilização.
+                  Manteremos determinados dados que transmite aos Serviços para
+                  gestão do desempenho e dados de utilização.
                 </p>
-                
+
                 <div className="alert alert-custom-warning">
-                  <h4 className="fw-bold mb-2">⚠️ Responsabilidade dos Dados</h4>
+                  <h4 className="fw-bold mb-2">
+                    ⚠️ Responsabilidade dos Dados
+                  </h4>
                   <p className="text-small mb-0">
-                    É o único responsável por todos os dados que transmite. Não temos responsabilidade por qualquer perda ou corrupção de dados.
+                    É o único responsável por todos os dados que transmite. Não
+                    temos responsabilidade por qualquer perda ou corrupção de
+                    dados.
                   </p>
                 </div>
               </Section>
@@ -586,15 +800,18 @@ const TermosCondicoes = () => {
                     Contacte-nos
                   </h2>
                   <p className="mb-4">
-                    Para resolver uma reclamação relativa aos Serviços ou para receber mais informações:
+                    Para resolver uma reclamação relativa aos Serviços ou para
+                    receber mais informações:
                   </p>
                   <div className="company-info">
                     <div className="text-small">
                       <p className="fw-bold">BetLearn</p>
-                      <p>Campus Universitário de Santiago, Universidade de Aveiro</p>
+                      <p>
+                        Campus Universitário de Santiago, Universidade de Aveiro
+                      </p>
                       <p>Aveiro, Aveiro 3810-193, Portugal</p>
                       <p>
-                        <strong>E-mail:</strong>{' '}
+                        <strong>E-mail:</strong>{" "}
                         <a href="mailto:betlearn2@gmail.com">
                           betlearn2@gmail.com
                         </a>
@@ -607,13 +824,13 @@ const TermosCondicoes = () => {
               {/* Footer */}
               <div className="footer text-center mt-4">
                 <p className="text-small mb-2">
-                  Recomendamos que imprima uma cópia destes Termos Legais para seu registo.
+                  Recomendamos que imprima uma cópia destes Termos Legais para
+                  seu registo.
                 </p>
                 <p className="text-small mb-0" style={{ opacity: 0.8 }}>
                   © 2025 BetLearn. Todos os direitos reservados.
                 </p>
               </div>
-
             </div>
           </div>
         </div>
